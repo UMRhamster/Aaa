@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp">
+
+    //连天气泡-人
+    <com.cst.whut.aaa.MyUI.SquareImageView
+        android:id="@+id/admin_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@mipmap/login_bg"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:scaleType="fitXY"/>
+
+    <com.cst.whut.aaa.MyUI.BubbleTextVew
+        android:id="@+id/admin_bubbletv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="@android:color/black"
+        android:layout_toLeftOf="@id/admin_image"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="5dp"
+        android:gravity="fill"
+        android:text="默认"
+        app:arrowWidth="8dp"
+        app:angle="5dp"
+        app:arrowHeight="10dp"
+        app:arrowPosition="14dp"
+        app:arrowLocation="right"
+        app:bubbleColor="#BAF06A"/>
+
+    //连天气泡-机器人
+    <com.cst.whut.aaa.MyUI.SquareImageView
+        android:id="@+id/robot_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@mipmap/login_bg"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="5dp"
+        android:scaleType="fitXY"/>
+
+    <com.cst.whut.aaa.MyUI.BubbleTextVew
+        android:id="@+id/robot_bubbletv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="@android:color/black"
+        android:layout_toRightOf="@id/robot_image"
+        android:layout_marginRight="100dp"
+        android:layout_marginLeft="5dp"
+        android:gravity="fill"
+        android:text="默认"
+        app:arrowWidth="8dp"
+        app:angle="5dp"
+        app:arrowHeight="10dp"
+        app:arrowPosition="14dp"
+        app:arrowLocation="left"
+        app:bubbleColor="#89CCDF"/>
+
+
+</RelativeLayout>

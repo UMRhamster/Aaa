@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navi_message"
+            android:checked="true"
+            android:icon="@drawable/message"
+            android:title="聊&#8201;天" />
+        <item
+            android:id="@+id/navi_map"
+            android:icon="@drawable/map"
+            android:title="地&#8201;图"/>
+        <item
+            android:id="@+id/navi_food"
+            android:icon="@drawable/food"
+            android:title="美&#8201;食"/>
+    </group>
+
+</menu>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/login_bg"
+    tools:context="com.cst.whut.aaa.MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="登录"
+        android:textSize="30sp"
+        android:textColor="@android:color/black"/>
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:shrinkColumns="1">
+        <TableRow>
+            <TextView
+                android:id="@+id/login_admin_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="账号:"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"/>
+            <EditText
+                android:id="@+id/login_admin_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:textCursorDrawable="@null"
+                android:background="@null"
+                android:textColor="@android:color/black"
+                android:maxLines="1"
+                android:hint="请填写账号"
+                android:inputType="text"
+                android:textColorHint="@android:color/darker_gray" />
+        </TableRow>
+        <TableRow>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="#ABB7C4"
+                android:layout_weight="1" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/login_password_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="密码:"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"/>
+            <EditText
+                android:id="@+id/login_password_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:textCursorDrawable="@null"
+                android:background="@null"
+                android:textColor="@android:color/black"
+                android:maxLines="1"
+                android:hint="请填写密码"
+                android:textColorHint="@android:color/darker_gray"
+                android:inputType="textPassword" />
+        </TableRow>
+        <TableRow>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="20dp"
+                android:background="#ABB7C4"
+                android:layout_weight="1" />
+        </TableRow>
+        <TextView
+            android:id="@+id/login_register_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="新用户注册"
+            android:textSize="15sp"
+            android:textColor="#0066FF"/>
+        <Button
+            android:id="@+id/login_login_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="登 录"
+            android:textSize="20sp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/login_btn" />
+
+    </TableLayout>
+
+</LinearLayout>

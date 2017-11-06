@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_chat"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EEEEF5"
+    tools:context="com.cst.whut.aaa.ChatActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/chatting_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="3dp"
+        android:background="#6dcc2d">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="robot"
+                android:textSize="20sp"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:id="@+id/bottombar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/chatting_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="8dp"
+            android:layout_marginRight="5dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/chatting_btnbg"
+            android:text="发送"
+            android:textColor="@android:color/black" />
+        <EditText
+            android:id="@+id/chatting_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/chatting_send"
+            android:textColor="@android:color/black"
+            android:textCursorDrawable="@null"
+            android:background="@drawable/chatting_etbg"
+            android:maxLines="3"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"/>
+    </RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/chatting_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/chatting_toolbar"
+        android:layout_above="@id/bottombar"/>
+
+</RelativeLayout>
