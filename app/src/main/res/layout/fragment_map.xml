@@ -9,10 +9,13 @@
         android:layout_height="match_parent"
         android:clickable="true"/>
     <RelativeLayout
+        android:id="@+id/mapsearch_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@drawable/mapsearch_bg">
+        android:background="@drawable/mapsearch_bg"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
         <TextView
             android:id="@+id/mapsearch_tv"
             android:layout_width="wrap_content"
@@ -46,5 +49,14 @@
             android:layout_toLeftOf="@id/mapsearch_v"
             />
     </RelativeLayout>
+    <ListView
+        android:id="@+id/mapsearch_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:visibility="gone"
+        android:background="#EBDDD5"
+        android:layout_below="@id/mapsearch_bar"/>
 
 </RelativeLayout>

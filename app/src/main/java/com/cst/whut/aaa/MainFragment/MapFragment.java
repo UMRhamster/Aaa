@@ -10,7 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +52,9 @@ import java.util.List;
  */
 
 public class MapFragment extends Fragment implements View.OnClickListener,OnGetRoutePlanResultListener{
+    //测试数据
+    private String[] testData = {"清华大学","北京大学","上海大学","南京大学","浙江大学","武汉大学","武汉理工大学","武汉理工大学","武汉理工大学"
+            ,"武汉理工大学","武汉理工大学","武汉理工大学","武汉理工大学","武汉理工大学","武汉理工大学","武汉理工大学"};
     //搜索服务
     private RoutePlanSearch routeSearch;
     private PlanNode start;
@@ -66,12 +71,15 @@ public class MapFragment extends Fragment implements View.OnClickListener,OnGetR
 
     private TextView mapSearch_tv;
     private EditText mapSearch_et;
+    private ListView mapSearch_lv;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         SDKInitializer.initialize(getActivity().getApplicationContext());
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         mapSearch_tv = (TextView)view.findViewById(R.id.mapsearch_tv);
         mapSearch_tv.setOnClickListener(this);
         mapSearch_et = (EditText)view.findViewById(R.id.mapsearch_et);
+        mapSearch_et.setOnClickListener(this);
+        mapSearch_lv = (ListView)view.findViewById(R.id.mapsearch_lv);
         locationClient = new LocationClient(getActivity().getApplicationContext());
         locationClient.registerLocationListener(new MyLocationListener());
         mapView = (MapView)view.findViewById(R.id.bdmap);
@@ -222,12 +230,18 @@ public class MapFragment extends Fragment implements View.OnClickListener,OnGetR
             case R.id.mapsearch_tv:
                 if(mapSearch_et.getText().toString().isEmpty()){
                     Toast.makeText(getActivity(),"终点不能为空",Toast.LENGTH_SHORT).show();
+                    //listview设置
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),R.layout.listcell_mapsearch,testData);
+                    mapSearch_lv.setAdapter(adapter);
+                    mapSearch_lv.setVisibility(View.VISIBLE);
+                    //
                     return;
             }
                 start = PlanNode.withCityNameAndPlaceName(mylocation.getCity(),mylocation.getAddrStr());
                 Toast.makeText(getActivity(),mylocation.getAddrStr()+"\n"+mylocation.getAddress(),Toast.LENGTH_SHORT).show();
                 end = PlanNode.withCityNameAndPlaceName("武汉",mapSearch_et.getText().toString());
                 routeSearch.walkingSearch(new WalkingRoutePlanOption().from(start).to(end));
+                break;
         }
     }
 
@@ -241,6 +255,14 @@ public class MapFragment extends Fragment implements View.OnClickListener,OnGetR
                 mylocation = bdLocation;
             }
         }
+    }
+
+    public boolean mapSearch_lvStatus() {
+        if(mapSearch_lv.getVisibility() == View.VISIBLE){
+            mapSearch_lv.setVisibility(View.GONE);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -259,10 +281,16 @@ public class MapFragment extends Fragment implements View.OnClickListener,OnGetR
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
+        mapSearch_lv.setVisibility(View.GONE);
         locationClient.stop();
         mapView.onDestroy();
         baiduMap.setMyLocationEnabled(false);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }
