@@ -32,6 +32,12 @@ import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.overlayutil.WalkingRouteOverlay;
 import com.baidu.mapapi.search.core.RouteLine;
 import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
+import com.baidu.mapapi.search.poi.PoiCitySearchOption;
+import com.baidu.mapapi.search.poi.PoiDetailResult;
+import com.baidu.mapapi.search.poi.PoiIndoorResult;
+import com.baidu.mapapi.search.poi.PoiResult;
+import com.baidu.mapapi.search.poi.PoiSearch;
 import com.baidu.mapapi.search.route.BikingRouteResult;
 import com.baidu.mapapi.search.route.DrivingRouteResult;
 import com.baidu.mapapi.search.route.IndoorRouteResult;
@@ -60,6 +66,10 @@ public class MapFragment extends Fragment implements View.OnClickListener,OnGetR
     private PlanNode start;
     private PlanNode end;
     private RouteLine route;
+    //检索
+    PoiSearch poiSearch;
+    PoiCitySearchOption poiCitySearchOption;
+
 
     private BDLocation mylocation;
 
@@ -85,6 +95,9 @@ public class MapFragment extends Fragment implements View.OnClickListener,OnGetR
         mapView = (MapView)view.findViewById(R.id.bdmap);
         baiduMap = mapView.getMap();
 
+        //检索
+        poiSearch = PoiSearch.newInstance();
+        poiSearch.setOnGetPoiSearchResultListener(onGetPoiSearchResultListener);
         //开启定位图层
         baiduMap.setMyLocationEnabled(true);
         List<String> permissionList = new ArrayList<>();
@@ -224,6 +237,22 @@ public class MapFragment extends Fragment implements View.OnClickListener,OnGetR
 
     }
 
+    OnGetPoiSearchResultListener onGetPoiSearchResultListener = new OnGetPoiSearchResultListener() {
+        @Override
+        public void onGetPoiResult(PoiResult poiResult) {
+            Toast.makeText(getActivity(),poiResult.getAllPoi().get(0).address,Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onGetPoiDetailResult(PoiDetailResult poiDetailResult) {
+
+        }
+
+        @Override
+        public void onGetPoiIndoorResult(PoiIndoorResult poiIndoorResult) {
+
+        }
+    };
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -237,10 +266,14 @@ public class MapFragment extends Fragment implements View.OnClickListener,OnGetR
                     //
                     return;
             }
-                start = PlanNode.withCityNameAndPlaceName(mylocation.getCity(),mylocation.getAddrStr());
-                Toast.makeText(getActivity(),mylocation.getAddrStr()+"\n"+mylocation.getAddress(),Toast.LENGTH_SHORT).show();
-                end = PlanNode.withCityNameAndPlaceName("武汉",mapSearch_et.getText().toString());
-                routeSearch.walkingSearch(new WalkingRoutePlanOption().from(start).to(end));
+                poiCitySearchOption = new PoiCitySearchOption()
+                        .city("武汉")
+                        .keyword(mapSearch_et.getText().toString());
+                poiSearch.searchInCity(poiCitySearchOption);
+//                start = PlanNode.withCityNameAndPlaceName(mylocation.getCity(),mylocation.getAddrStr());
+//                Toast.makeText(getActivity(),mylocation.getAddrStr()+"\n"+mylocation.getAddress(),Toast.LENGTH_SHORT).show();
+//                end = PlanNode.withCityNameAndPlaceName("武汉",mapSearch_et.getText().toString());
+//                routeSearch.walkingSearch(new WalkingRoutePlanOption().from(start).to(end));
                 break;
         }
     }
