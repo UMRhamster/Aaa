@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@android:id/text1"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceListItemSmall"
-    android:gravity="center_vertical"
-    android:textColor="@android:color/black"
-    android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
-    android:paddingRight="?android:attr/listPreferredItemPaddingRight"
-    android:minHeight="?android:attr/listPreferredItemHeightSmall" />
+    android:layout_marginTop="5dp">
+    <TextView
+        android:id="@+id/poi_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="武汉大学"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="5dp"
+         />
+    <TextView
+        android:id="@+id/poi_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="湖北省武汉市和平大道1178号"
+        android:textSize="14sp"
+        android:textColor="#5A5F6B"
+        android:layout_below="@id/poi_name"
+        android:layout_marginLeft="5dp"/>
+
+
+</RelativeLayout>

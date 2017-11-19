@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -46,8 +47,11 @@ import com.baidu.mapapi.search.route.OnGetRoutePlanResultListener;
 import com.baidu.mapapi.search.route.PlanNode;
 import com.baidu.mapapi.search.route.RoutePlanSearch;
 import com.baidu.mapapi.search.route.TransitRouteResult;
+import com.baidu.mapapi.search.route.WalkingRouteLine;
 import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
+import com.cst.whut.aaa.DataProcess.PoiAdapter;
+import com.cst.whut.aaa.DataProcess.PoiPlace;
 import com.cst.whut.aaa.R;
 
 import java.util.ArrayList;
@@ -57,7 +61,7 @@ import java.util.List;
  * Created by 12421 on 2017/11/1.
  */
 
-public class MapFragment extends Fragment implements View.OnClickListener,OnGetRoutePlanResultListener{
+public class MapFragment extends Fragment implements View.OnClickListener,OnGetRoutePlanResultListener,AdapterView.OnItemClickListener{
     //测试数据
     private String[] testData = {"清华大学","北京大学","上海大学","南京大学","浙江大学","武汉大学","武汉理工大学","武汉理工大学","武汉理工大学"
             ,"武汉理工大学","武汉理工大学","武汉理工大学","武汉理工大学","武汉理工大学","武汉理工大学","武汉理工大学"};
@@ -65,8 +69,12 @@ public class MapFragment extends Fragment implements View.OnClickListener,OnGetR
     private RoutePlanSearch routeSearch;
     private PlanNode start;
     private PlanNode end;
-    private RouteLine route;
+    private WalkingRouteLine route;
+    WalkingRouteOverlay option;
+    private boolean hasRoute;
     //检索
+    private List<PoiPlace> poiPlaceList = new ArrayList<PoiPlace>();
+    PoiAdapter poiAdapter;
     PoiSearch poiSearch;
     PoiCitySearchOption poiCitySearchOption;
 
@@ -98,12 +106,16 @@ public class MapFragment extends Fragment implements View.OnClickListener,OnGetR
         //检索
         poiSearch = PoiSearch.newInstance();
         poiSearch.setOnGetPoiSearchResultListener(onGetPoiSearchResultListener);
+        poiAdapter = new PoiAdapter(poiPlaceList,getActivity());
+        mapSearch_lv.setAdapter(poiAdapter);
+        mapSearch_lv.setOnItemClickListener(this);
         //开启定位图层
         baiduMap.setMyLocationEnabled(true);
         List<String> permissionList = new ArrayList<>();
         //路径规划
         routeSearch = RoutePlanSearch.newInstance();
         routeSearch.setOnGetRoutePlanResultListener(this);
+        hasRoute = false;
 
         if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
             permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
@@ -202,13 +214,16 @@ public class MapFragment extends Fragment implements View.OnClickListener,OnGetR
             return;
         }
         if(walkingRouteResult.error == SearchResult.ERRORNO.NO_ERROR){
+            if(hasRoute){
+                baiduMap.clear();
+            }
             route = walkingRouteResult.getRouteLines().get(0);
-            WalkingRouteOverlay option = new WalkingRouteOverlay(baiduMap);
+            option = new WalkingRouteOverlay(baiduMap);
             baiduMap.setOnMarkerClickListener(option);
-
-            option.setData(walkingRouteResult.getRouteLines().get(0));
+            option.setData(route);
             option.addToMap();
             option.zoomToSpan();
+            hasRoute = true;
         }
     }
 
@@ -240,7 +255,17 @@ public class MapFragment extends Fragment implements View.OnClickListener,OnGetR
     OnGetPoiSearchResultListener onGetPoiSearchResultListener = new OnGetPoiSearchResultListener() {
         @Override
         public void onGetPoiResult(PoiResult poiResult) {
-            Toast.makeText(getActivity(),poiResult.getAllPoi().get(0).address,Toast.LENGTH_SHORT).show();
+            if(poiPlaceList.size()!=0){
+                poiPlaceList.clear();
+            }
+            int length = poiResult.getAllPoi().size();
+            for(int i=0;i<length;i++){
+                PoiPlace poiPlace = new PoiPlace(poiResult.getAllPoi().get(i).name,poiResult.getAllPoi().get(i).address);
+                poiPlace.setLatLng(poiResult.getAllPoi().get(i).location);
+                poiPlaceList.add(poiPlace);
+            }
+            mapSearch_lv.setVisibility(View.VISIBLE);
+            poiAdapter.notifyDataSetChanged();
         }
 
         @Override
@@ -258,24 +283,26 @@ public class MapFragment extends Fragment implements View.OnClickListener,OnGetR
         switch (v.getId()){
             case R.id.mapsearch_tv:
                 if(mapSearch_et.getText().toString().isEmpty()){
-                    Toast.makeText(getActivity(),"终点不能为空",Toast.LENGTH_SHORT).show();
-                    //listview设置
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),R.layout.listcell_mapsearch,testData);
-                    mapSearch_lv.setAdapter(adapter);
-                    mapSearch_lv.setVisibility(View.VISIBLE);
-                    //
+                    Toast.makeText(getActivity(),"请输入正确的目的地",Toast.LENGTH_SHORT).show();
                     return;
             }
                 poiCitySearchOption = new PoiCitySearchOption()
-                        .city("武汉")
+                        .city(mylocation.getCity())
                         .keyword(mapSearch_et.getText().toString());
                 poiSearch.searchInCity(poiCitySearchOption);
-//                start = PlanNode.withCityNameAndPlaceName(mylocation.getCity(),mylocation.getAddrStr());
-//                Toast.makeText(getActivity(),mylocation.getAddrStr()+"\n"+mylocation.getAddress(),Toast.LENGTH_SHORT).show();
-//                end = PlanNode.withCityNameAndPlaceName("武汉",mapSearch_et.getText().toString());
-//                routeSearch.walkingSearch(new WalkingRoutePlanOption().from(start).to(end));
+
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        PoiPlace poiPlace= poiPlaceList.get(position);
+        start = PlanNode.withLocation(new LatLng(mylocation.getLatitude(),mylocation.getLongitude()));
+//            Toast.makeText(getActivity(),mylocation.getCity()+"\n"+poiResult.getAllPoi().get(0).address,Toast.LENGTH_SHORT).show();
+        end = PlanNode.withLocation(poiPlace.getLatLng());
+        routeSearch.walkingSearch(new WalkingRoutePlanOption().from(start).to(end));
+        mapSearch_lv.setVisibility(View.GONE);
     }
 
     public class MyLocationListener extends BDAbstractLocationListener {
