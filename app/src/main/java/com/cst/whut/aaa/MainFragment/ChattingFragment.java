@@ -87,7 +87,6 @@ public class ChattingFragment extends Fragment implements View.OnClickListener{
                     public void run() {
                         DataProcess dataProcess = new DataProcess();
                         try {
-                            Thread.sleep((new Random().nextInt(2000%2001)+0));
                             Message message = Message.obtain();
                             message.obj = dataProcess.chatting(pmessage);
                             handler.sendMessage(message);

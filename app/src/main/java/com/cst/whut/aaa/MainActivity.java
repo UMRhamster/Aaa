@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onPause() {
         super.onPause();
         bool_btn = false;
+//        progressBar.setVisibility(View.GONE);
         Log.d("MainActivity","onPause");
     }
 
@@ -100,7 +102,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         login_pwd = (EditText) findViewById(R.id.login_password_et);
         register_tv.setOnClickListener(this);
         login_btn.setOnClickListener(this);
-
         bool_btn = false;
     }
     @Override
@@ -114,6 +115,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.login_login_btn:
                 if(!bool_btn){
                     bool_btn = true;
+                    if(login_admin.getText().toString().isEmpty() || login_pwd.getText().toString().isEmpty()){
+                        Toast.makeText(MainActivity.this,"请输入账号或密码！",Toast.LENGTH_SHORT).show();
+                        bool_btn = false;
+                        break;
+                    }
                     //开启线程
                     mHandler.post(mRunnable);
                 }

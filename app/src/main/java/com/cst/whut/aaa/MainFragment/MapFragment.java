@@ -1,6 +1,8 @@
 package com.cst.whut.aaa.MainFragment;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.app.Fragment;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -287,6 +290,7 @@ public class MapFragment extends Fragment implements View.OnClickListener,OnGetR
                     return;
             }
                 poiCitySearchOption = new PoiCitySearchOption()
+                        .pageCapacity(20)
                         .city(mylocation.getCity())
                         .keyword(mapSearch_et.getText().toString());
                 poiSearch.searchInCity(poiCitySearchOption);

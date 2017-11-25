@@ -28,41 +28,45 @@ public class DataProcess {
     //登录/////////////////////////////////////////////////////////////////////////
     public boolean login (String loginName,String loginpwd) throws Exception{
 
-        URL url = new URL("http://www.cnpromise.cn:8087/login");
-        connection = (HttpURLConnection)url.openConnection();
-        connection.setRequestMethod("POST");
-        connection.setConnectTimeout(8000);
-        connection.setReadTimeout(8000);
-        connection.setDoOutput(true);
-        connection.setDoInput(true);
-        //
-        StringBuffer params = new StringBuffer();
-        params.append("loginName").append("=").append(loginName).append("&")
-                .append("loginpwd").append("=").append(loginpwd);
-        byte[] bytes = params.toString().getBytes("UTF-8");
-        //
-        //
-        OutputStream out = connection.getOutputStream();
-        out.write(bytes);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(),"utf-8"));
-        StringBuilder response = new StringBuilder();
-        String line;
-        while ((line = reader.readLine())!=null){
-            response.append(line);
+        try {
+            URL url = new URL("http://115.159.197.73:8087/login");
+            connection = (HttpURLConnection)url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setConnectTimeout(5000);
+            connection.setReadTimeout(5000);
+            connection.setDoOutput(true);
+            connection.setDoInput(true);
+            //
+            StringBuffer params = new StringBuffer();
+            params.append("loginName").append("=").append(loginName).append("&")
+                    .append("loginpwd").append("=").append(loginpwd);
+            byte[] bytes = params.toString().getBytes("UTF-8");
+            //
+            //
+            OutputStream out = connection.getOutputStream();
+            out.write(bytes);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(),"utf-8"));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine())!=null){
+                response.append(line);
+            }
+            if(connection!=null){
+                connection.disconnect();
+            }
+            return parseJson(response.toString());
+        }catch (Exception e) {
+            return false;
         }
-        if(connection!=null){
-            connection.disconnect();
-        }
-        return parseJson(response.toString());
     }
     //注册/////////////////////////////////////////////////////////////////////////////////
     public boolean register (String registerName,String registerPwd) throws Exception{
         boolean bool = false;
-        URL url = new URL("http://www.cnpromise.cn:8087/signup");
+        URL url = new URL("http://115.159.197.73:8087/signup");
         connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
-        connection.setConnectTimeout(8000);
-        connection.setReadTimeout(8000);
+        connection.setConnectTimeout(5000);
+        connection.setReadTimeout(5000);
         connection.setDoOutput(true);
         connection.setDoInput(true);
         OutputStream out = connection.getOutputStream();
@@ -86,11 +90,11 @@ public class DataProcess {
     }
     //聊天/////////////////////////////////////////////////////////////////////////////
     public ChattingContext chatting(String userMessage) throws Exception{
-        URL url = new URL("http://www.cnpromise.cn:8087/hello");
+        URL url = new URL("http://115.159.197.73:8087/hello");
         connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
-        connection.setConnectTimeout(8000);
-        connection.setReadTimeout(8000);
+        connection.setConnectTimeout(5000);
+        connection.setReadTimeout(5000);
         connection.setDoOutput(true);
         connection.setDoInput(true);
         OutputStream out = connection.getOutputStream();
