@@ -14,21 +14,17 @@ import com.cst.whut.aaa.R;
  * Created by 12421 on 2017/10/29.
  */
 
-public class TestFragment extends Fragment {
-    private WebView webview;
+public class FoodFragment extends Fragment {
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.fragment_test, container, false);
-        webview = (WebView)view.findViewById(R.id.map);
-        webview.getSettings().setJavaScriptEnabled(true);
-        webview.setWebViewClient(new WebViewClient());
-        webview.loadUrl("http://www.cnpromise.cn:8087/myPosition");
+        View view = inflater.inflate(R.layout.fragment_food, container, false);
+
         return view;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        webview.clearCache(true);
-        webview.clearFormData();
+
     }
 }

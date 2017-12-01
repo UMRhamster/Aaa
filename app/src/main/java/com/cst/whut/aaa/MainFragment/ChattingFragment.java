@@ -9,9 +9,11 @@ import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -55,6 +57,37 @@ public class ChattingFragment extends Fragment implements View.OnClickListener{
         recyclerView.setLayoutManager(layoutManager);
         bubbleAdapter = new BubbleAdapter(chattingList,getActivity());
         recyclerView.setAdapter(bubbleAdapter);
+        chatting_et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_SEND){
+                    final String  pmessage = chatting_et.getText().toString();
+                    if(pmessage.equals("")){
+                        Toast.makeText(getActivity(),"不能没有内容哦^_^",Toast.LENGTH_SHORT).show();
+                        return false;
+                    }
+                    chattingList.add(new ChattingContext(pmessage,"people"));
+                    bubbleAdapter.notifyDataSetChanged();
+                    recyclerView.scrollToPosition(bubbleAdapter.getItemCount()-1);
+                    chatting_et.setText("");
+                    //线程
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            DataProcess dataProcess = new DataProcess();
+                            try {
+                                Message message = Message.obtain();
+                                message.obj = dataProcess.chatting(pmessage);
+                                handler.sendMessage(message);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
+                }
+                return false;
+            }
+        });
         return view;
     }
 
@@ -78,9 +111,6 @@ public class ChattingFragment extends Fragment implements View.OnClickListener{
                 bubbleAdapter.notifyDataSetChanged();
                 recyclerView.scrollToPosition(bubbleAdapter.getItemCount()-1);
                 chatting_et.setText("");
-//                for(int i=0;i<chattingList.size();i++){
-//                    Log.d("a",chattingList.get(i).getContext()+"   "+chattingList.get(i).getCaller());
-//                }
                 //线程
                 new Thread(new Runnable() {
                     @Override

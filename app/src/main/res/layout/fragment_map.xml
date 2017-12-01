@@ -57,7 +57,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
         android:visibility="gone"
-        android:background="#EBDDD5"
+        android:background="#bbEBDDD5"
         android:layout_below="@id/mapsearch_bar"/>
 
 </RelativeLayout>

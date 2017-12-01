@@ -19,7 +19,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="robot"
+                android:text="出行小助手"
                 android:textSize="20sp"
                 android:layout_centerInParent="true" />
         </RelativeLayout>
@@ -56,6 +56,7 @@
             android:textColor="@android:color/black"
             android:textCursorDrawable="@null"
             android:background="@drawable/chatting_etbg"
+            android:imeOptions="actionSend"
             android:maxLines="3"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"

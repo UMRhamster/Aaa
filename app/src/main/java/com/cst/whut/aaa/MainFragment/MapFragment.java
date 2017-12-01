@@ -9,10 +9,12 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -65,9 +67,6 @@ import java.util.List;
  */
 
 public class MapFragment extends Fragment implements View.OnClickListener,OnGetRoutePlanResultListener,AdapterView.OnItemClickListener{
-    //测试数据
-    private String[] testData = {"清华大学","北京大学","上海大学","南京大学","浙江大学","武汉大学","武汉理工大学","武汉理工大学","武汉理工大学"
-            ,"武汉理工大学","武汉理工大学","武汉理工大学","武汉理工大学","武汉理工大学","武汉理工大学","武汉理工大学"};
     //搜索服务
     private RoutePlanSearch routeSearch;
     private PlanNode start;
@@ -119,7 +118,25 @@ public class MapFragment extends Fragment implements View.OnClickListener,OnGetR
         routeSearch = RoutePlanSearch.newInstance();
         routeSearch.setOnGetRoutePlanResultListener(this);
         hasRoute = false;
-
+        mapSearch_et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_SEARCH){
+                    if(mapSearch_et.getText().toString().isEmpty()){
+                        Toast.makeText(getActivity(),"请输入正确的目的地",Toast.LENGTH_SHORT).show();
+                        return false;
+                    }
+                    poiCitySearchOption = new PoiCitySearchOption()
+                            .pageCapacity(20)
+                            .city(mylocation.getCity())
+                            .keyword(mapSearch_et.getText().toString());
+                    poiSearch.searchInCity(poiCitySearchOption);
+                    return true;
+                }
+                return false;
+            }
+        });
+        //权限
         if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
             permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
         }
@@ -294,7 +311,6 @@ public class MapFragment extends Fragment implements View.OnClickListener,OnGetR
                         .city(mylocation.getCity())
                         .keyword(mapSearch_et.getText().toString());
                 poiSearch.searchInCity(poiCitySearchOption);
-
                 break;
         }
     }

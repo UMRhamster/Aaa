@@ -15,6 +15,21 @@
             android:id="@+id/navi_food"
             android:icon="@drawable/food"
             android:title="美&#8201;食"/>
+        <item
+            android:id="@+id/navi_ticket"
+            android:icon="@drawable/ticket"
+            android:title="机&#8201;票"/>
     </group>
+    <group android:checkableBehavior="none">
+        <item
+            android:icon="@null"
+            android:title="@null"
+            android:checkable="false"
+            android:checked="false" />
 
+        <item
+            android:id="@+id/navi_logout"
+            android:icon="@drawable/logout"
+            android:title="注&#8201;销"/>
+        </group>
 </menu>
