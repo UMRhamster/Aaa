@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -25,8 +26,7 @@ public class TicketFragment extends Fragment{
         //webview.getSettings().setUseWideViewPort(true);
         //webview.getSettings().setLoadWithOverviewMode(true);
         //Log.d("fdasdfsdf",webview.getSettings().getUserAgentString());
-        String ua = webview.getSettings().getUserAgentString();
-        webview.getSettings().setUserAgentString(ua+";Android");
+        webview.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         webview.setWebViewClient(new WebViewClient());
         webview.loadUrl("http://115.159.197.73:8087/prettyPrice");
         return view;

@@ -15,6 +15,7 @@
         android:background="@drawable/mapsearch_bg"
         android:layout_alignParentBottom="true"
         android:focusable="true"
+        android:visibility="gone"
         android:focusableInTouchMode="true">
         <TextView
             android:id="@+id/restruant_id"
@@ -22,6 +23,9 @@
             android:layout_height="wrap_content"
             android:text="品湘味酒店"
             android:textSize="20sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
             android:textColor="@android:color/black"/>
         <TextView
             android:id="@+id/restruant_address"
@@ -30,7 +34,25 @@
             android:text="武汉市友谊大道996号华城广场1-2楼"
             android:textSize="14sp"
             android:textColor="@android:color/black"
+            android:layout_marginLeft="5dp"
             android:layout_below="@id/restruant_id"/>
+        <TextView
+            android:id="@+id/restruant_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:text="电话未知"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentRight="true"/>
+        <View
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:background="@drawable/phone"
+            android:layout_marginRight="5dp"
+            android:layout_alignTop="@id/restruant_phone"
+            android:layout_toLeftOf="@id/restruant_phone"/>
         <Button
             android:id="@+id/restruant_go"
             android:layout_width="match_parent"
