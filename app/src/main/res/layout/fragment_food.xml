@@ -3,5 +3,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/bdmap_food"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"/>
+    <RelativeLayout
+        android:id="@+id/foodnearby_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/mapsearch_bg"
+        android:layout_alignParentBottom="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+        <TextView
+            android:id="@+id/restruant_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="品湘味酒店"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"/>
+        <TextView
+            android:id="@+id/restruant_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="武汉市友谊大道996号华城广场1-2楼"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:layout_below="@id/restruant_id"/>
+        <Button
+            android:id="@+id/restruant_go"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="到&#8194;这&#8194;去"
+            android:textSize="20sp"
+            android:background="@drawable/login_btn"
+            android:layout_below="@id/restruant_address"/>
+    </RelativeLayout>
+
 
 </RelativeLayout>

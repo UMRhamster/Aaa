@@ -113,6 +113,7 @@ public class MapFragment extends Fragment implements View.OnClickListener,OnGetR
         mapSearch_lv.setOnItemClickListener(this);
         //开启定位图层
         baiduMap.setMyLocationEnabled(true);
+        //权限
         List<String> permissionList = new ArrayList<>();
         //路径规划
         routeSearch = RoutePlanSearch.newInstance();
@@ -164,7 +165,7 @@ public class MapFragment extends Fragment implements View.OnClickListener,OnGetR
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
         option.setCoorType("bd09ll");
-        option.setScanSpan(2000);  //5秒间隔刷新位置信息
+        option.setScanSpan(2000);  //2秒间隔刷新位置信息
         option.setIsNeedAddress(true);   //需要获取当前位置详细信息
         option.setOpenGps(true);   //设置GPS可用
         locationClient.setLocOption(option);
@@ -199,7 +200,6 @@ public class MapFragment extends Fragment implements View.OnClickListener,OnGetR
                 break;
         }
     }
-
     private void navigateTo(BDLocation location){
         if(isFirstLocate){
             LatLng ll = new LatLng(location.getLatitude(),location.getLongitude());

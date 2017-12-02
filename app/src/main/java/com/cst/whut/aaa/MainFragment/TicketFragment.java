@@ -2,6 +2,8 @@ package com.cst.whut.aaa.MainFragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,11 @@ public class TicketFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_ticket, container, false);
         webview = (WebView)view.findViewById(R.id.ticket);
         webview.getSettings().setJavaScriptEnabled(true);
+        //webview.getSettings().setUseWideViewPort(true);
+        //webview.getSettings().setLoadWithOverviewMode(true);
+        //Log.d("fdasdfsdf",webview.getSettings().getUserAgentString());
+        String ua = webview.getSettings().getUserAgentString();
+        webview.getSettings().setUserAgentString(ua+";Android");
         webview.setWebViewClient(new WebViewClient());
         webview.loadUrl("http://115.159.197.73:8087/prettyPrice");
         return view;
