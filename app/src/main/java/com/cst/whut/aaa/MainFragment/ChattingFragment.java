@@ -2,19 +2,23 @@ package com.cst.whut.aaa.MainFragment;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,11 +37,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * Created by 12421 on 2017/10/22.
  */
 
 public class ChattingFragment extends Fragment implements View.OnClickListener{
+    //菜单
+    private DrawerLayout drawerLayout;
+    private ImageButton imageButton;
     private List<ChattingContext> chattingList = new ArrayList<>();
     private RecyclerView recyclerView;
     private TextView chatting_sdbtn;
@@ -45,14 +54,20 @@ public class ChattingFragment extends Fragment implements View.OnClickListener{
     BubbleAdapter bubbleAdapter;
     LinearLayoutManager layoutManager;
 
-
+    SharedPreferences sharedPreferences;
+    String username;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_chatting, container, false);
+        drawerLayout = (DrawerLayout)getActivity().findViewById(R.id.drawer_layout);
+        imageButton = (ImageButton)view.findViewById(R.id.chat_toolbar_menu);
+        imageButton.setOnClickListener(this);
         recyclerView = (RecyclerView)view.findViewById(R.id.chatting_recyclerview);
         chatting_sdbtn = (TextView)view.findViewById(R.id.chatting_send);
         chatting_et = (EditText) view.findViewById(R.id.chatting_et);
         chatting_sdbtn.setOnClickListener(this);
 
+        sharedPreferences = getActivity().getSharedPreferences("user_info",MODE_PRIVATE);
+        username = sharedPreferences.getString("user_info","");
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         bubbleAdapter = new BubbleAdapter(chattingList,getActivity());
@@ -77,7 +92,7 @@ public class ChattingFragment extends Fragment implements View.OnClickListener{
                             DataProcess dataProcess = new DataProcess();
                             try {
                                 Message message = Message.obtain();
-                                message.obj = dataProcess.chatting(pmessage);
+                                message.obj = dataProcess.chatting(pmessage,username);
                                 handler.sendMessage(message);
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -118,13 +133,16 @@ public class ChattingFragment extends Fragment implements View.OnClickListener{
                         DataProcess dataProcess = new DataProcess();
                         try {
                             Message message = Message.obtain();
-                            message.obj = dataProcess.chatting(pmessage);
+                            message.obj = dataProcess.chatting(pmessage,username);
                             handler.sendMessage(message);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 }).start();
+                break;
+            case R.id.chat_toolbar_menu:
+                drawerLayout.openDrawer(Gravity.LEFT);
                 break;
             default:
                 break;

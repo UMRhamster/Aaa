@@ -8,10 +8,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -95,9 +98,16 @@ public class FoodFragment extends Fragment implements View.OnClickListener,OnGet
     private TextView food_address;
     private TextView food_phone;
     private Button food_go;
+    //toolbar菜单
+    private DrawerLayout drawerLayout;
+    private ImageButton imageButton;
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         SDKInitializer.initialize(getActivity().getApplicationContext());
         View view = inflater.inflate(R.layout.fragment_food, container, false);
+
+        drawerLayout = (DrawerLayout)getActivity().findViewById(R.id.drawer_layout);
+        imageButton = (ImageButton)view.findViewById(R.id.food_toolbar_menu);
+        imageButton.setOnClickListener(this);
 
         food_info = (RelativeLayout)view.findViewById(R.id.foodnearby_info);
         food_id = (TextView)view.findViewById(R.id.restruant_id);
@@ -230,7 +240,6 @@ public class FoodFragment extends Fragment implements View.OnClickListener,OnGet
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.restruant_go:
-                Toast.makeText(getActivity(),"click",Toast.LENGTH_SHORT).show();
                 start = PlanNode.withLocation(new LatLng(mylocation.getLatitude(),mylocation.getLongitude()));
                 end = PlanNode.withLocation(result.getAllPoi().get(index).location);
                 routeSearch.walkingSearch(new WalkingRoutePlanOption().from(start).to(end));
@@ -240,6 +249,10 @@ public class FoodFragment extends Fragment implements View.OnClickListener,OnGet
                 intent.setAction(Intent.ACTION_CALL);
                 intent.setData(Uri.parse("tel:"+food_phone.getText().toString()));
                 startActivity(intent);
+                break;
+            case R.id.food_toolbar_menu:
+                drawerLayout.openDrawer(Gravity.LEFT);
+                break;
             default:
                 break;
         }

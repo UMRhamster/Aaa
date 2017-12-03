@@ -89,8 +89,8 @@ public class DataProcess {
         return parseJson(response.toString());
     }
     //聊天/////////////////////////////////////////////////////////////////////////////
-    public ChattingContext chatting(String userMessage) throws Exception{
-        URL url = new URL("http://115.159.197.73:8087/hello");
+    public ChattingContext chatting(String userMessage,String userName) throws Exception{
+        URL url = new URL("http://115.159.197.73:8087/index?username="+userName);
         connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
         connection.setConnectTimeout(5000);

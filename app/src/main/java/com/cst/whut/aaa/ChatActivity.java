@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.cst.whut.aaa.MainFragment.ChattingFragment;
 import com.cst.whut.aaa.MainFragment.FoodFragment;
+import com.cst.whut.aaa.MainFragment.HelpFragment;
+import com.cst.whut.aaa.MainFragment.HotPlaceFragment;
 import com.cst.whut.aaa.MainFragment.MapFragment;
 import com.cst.whut.aaa.MainFragment.TicketFragment;
 
@@ -34,6 +36,8 @@ public class ChatActivity extends AppCompatActivity {
     private MapFragment mapFragment;
     private FoodFragment foodFragment;
     private TicketFragment ticketFragment;
+    private HotPlaceFragment hotPlaceFragment;
+    private HelpFragment helpFragment;
     //侧边栏菜单 头部
     private TextView drawer_id;
     //连续返回键退出程序
@@ -75,7 +79,6 @@ public class ChatActivity extends AppCompatActivity {
                         }
                         transaction.replace(R.id.contentLayout,foodFragment);
                         transaction.commit();
-                        Toast.makeText(ChatActivity.this,"测试碎片~",Toast.LENGTH_SHORT).show();
                         item.setChecked(true);
                         break;
                     case R.id.navi_ticket:
@@ -83,6 +86,22 @@ public class ChatActivity extends AppCompatActivity {
                             ticketFragment = new TicketFragment();
                         }
                         transaction.replace(R.id.contentLayout,ticketFragment);
+                        transaction.commit();
+                        item.setChecked(true);
+                        break;
+                    case R.id.navi_hotplace:
+                        if(hotPlaceFragment == null){
+                            hotPlaceFragment = new HotPlaceFragment();
+                        }
+                        transaction.replace(R.id.contentLayout,hotPlaceFragment);
+                        transaction.commit();
+                        item.setChecked(true);
+                        break;
+                    case R.id.navi_help:
+                        if(helpFragment == null){
+                            helpFragment = new HelpFragment();
+                        }
+                        transaction.replace(R.id.contentLayout,helpFragment);
                         transaction.commit();
                         item.setChecked(true);
                         break;
@@ -95,7 +114,6 @@ public class ChatActivity extends AppCompatActivity {
                         break;
                     default:
                         item.setChecked(false);
-                        item.setCheckable(false);
                 }
                 return true;
             }
@@ -111,6 +129,7 @@ public class ChatActivity extends AppCompatActivity {
         View headlayout = navigationView.getHeaderView(0);//header位于0号元素
         drawer_id = (TextView)headlayout.findViewById(R.id.drawer_id);
         drawer_id.setText("ID:"+sharedPreferences.getString("admin","XXXXXX"));
+        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
     }
     @Override
     protected void onStart() {

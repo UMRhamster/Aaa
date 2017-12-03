@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/first"
     tools:context="com.cst.whut.aaa.RegisterActivity">
 
     <TextView
@@ -114,10 +115,22 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginTop="20dp"
-                android:text="注 册"
+                android:text="注&#8195;&#8195;册"
                 android:textSize="20sp"
                 android:textColor="@android:color/white"
                 android:background="@drawable/login_btn" />
+        </TableRow>
+        <TableRow>
+            <Button
+                android:id="@+id/register_gologin_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                android:text="前往登陆"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"
+                android:background="@drawable/register_gologin_btn" />
         </TableRow>
     </TableLayout>
 </LinearLayout>

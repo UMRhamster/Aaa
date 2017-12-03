@@ -6,30 +6,39 @@
             android:id="@+id/navi_message"
             android:checked="true"
             android:icon="@drawable/message"
-            android:title="聊&#8201;天" />
+            android:title="聊&#8195;天" />
         <item
             android:id="@+id/navi_map"
             android:icon="@drawable/map"
-            android:title="地&#8201;图"/>
+            android:title="地&#8195;图"/>
         <item
             android:id="@+id/navi_food"
             android:icon="@drawable/food"
-            android:title="美&#8201;食"/>
+            android:title="美&#8195;食"/>
+        <item
+            android:id="@+id/navi_hotplace"
+            android:icon="@drawable/hotplace"
+            android:title="热力图"/>
         <item
             android:id="@+id/navi_ticket"
             android:icon="@drawable/ticket"
-            android:title="机&#8201;票"/>
+            android:title="机&#8195;票"/>
+        <item
+            android:id="@+id/navi_help"
+            android:icon="@drawable/help"
+            android:title="帮&#8195;助"/>
     </group>
     <group android:checkableBehavior="none">
         <item
             android:icon="@null"
             android:title="@null"
             android:checkable="false"
+            android:visible="false"
             android:checked="false" />
 
         <item
             android:id="@+id/navi_logout"
             android:icon="@drawable/logout"
-            android:title="注&#8201;销"/>
+            android:title="注&#8195;销"/>
         </group>
 </menu>
