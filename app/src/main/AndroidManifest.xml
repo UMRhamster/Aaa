@@ -28,15 +28,28 @@
     //使用步行AR导航，配置Camera权限
     //电话权限
     <uses-permission android:name="android.permission.CALL_PHONE"/>
+    //百度语音合成权限（额外）
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        //百度地图
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="zqrZFIhSxs5dhsrqmUmg13viPVrKwRO3"/>
+        //百度语音
+        <meta-data android:name="com.baidu.speech.APP_ID"
+            android:value="10491048" />
+        <meta-data
+            android:name="com.baidu.speech.API_KEY"
+            android:value="qBneQT9KhXSBKp80sBvEnfTW" />
+        <meta-data
+            android:name="com.baidu.speech.SECRET_KEY"
+            android:value="8ecd8b85125b2bb947f41aa26961244c" />
+        //
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -8,6 +8,8 @@ import android.os.HandlerThread;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -55,13 +57,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("MainActivity","onStart");
+        //Log.d("MainActivity","onStart");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("MainActivity","onResume");
+       //Log.d("MainActivity","onResume");
     }
 
     @Override
@@ -69,25 +71,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onPause();
         bool_btn = false;
 //        progressBar.setVisibility(View.GONE);
-        Log.d("MainActivity","onPause");
+        //Log.d("MainActivity","onPause");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d("MainActivity","onStop");
+        //Log.d("MainActivity","onStop");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("MainActivity","onDestroy");
+        //Log.d("MainActivity","onDestroy");
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d("MainActivity","onRestart");
+        //Log.d("MainActivity","onRestart");
     }
 
     private Runnable mRunnable = new Runnable() {

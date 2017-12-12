@@ -11,10 +11,11 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-
+import java.security.MessageDigest;
 
 
 /**
@@ -36,10 +37,13 @@ public class DataProcess {
             connection.setReadTimeout(5000);
             connection.setDoOutput(true);
             connection.setDoInput(true);
+            //计算md5
+            MessageDigest md5 = MessageDigest.getInstance("MD5");
+            md5.update(loginpwd.getBytes());
             //
             StringBuffer params = new StringBuffer();
             params.append("loginName").append("=").append(loginName).append("&")
-                    .append("loginpwd").append("=").append(loginpwd);
+                    .append("loginpwd").append("=").append(new BigInteger(1,md5.digest()).toString(16));  //密码为md5值
             byte[] bytes = params.toString().getBytes("UTF-8");
             //
             //
@@ -70,10 +74,13 @@ public class DataProcess {
         connection.setDoOutput(true);
         connection.setDoInput(true);
         OutputStream out = connection.getOutputStream();
+        //计算md5
+        MessageDigest md5 = MessageDigest.getInstance("MD5");
+        md5.update(registerPwd.getBytes());
         //
         StringBuffer params = new StringBuffer();
         params.append("signUpName").append("=").append(registerName).append("&")
-                .append("signUppwd").append("=").append(registerPwd);
+                .append("signUppwd").append("=").append(new BigInteger(1,md5.digest()).toString(16));
         byte[] bytes = params.toString().getBytes("UTF-8");
         //
         out.write(bytes);

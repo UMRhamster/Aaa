@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import com.cst.whut.aaa.DataProcess.DataProcess;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
     private Handler mHandler;
     private HandlerThread mHandlerThread;
@@ -65,8 +68,22 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             case R.id.register_register_btn:
                 if(register_password.getText().toString().isEmpty()||register_cpassword.getText().toString().isEmpty()||register_admin.getText().toString().isEmpty()){
                     Toast.makeText(RegisterActivity.this,"用户名或密码不能为空!",Toast.LENGTH_SHORT).show();
-                    break;
+                    return;
                 }
+                //判断用户和密码合法性
+                Pattern pattern_admin = Pattern.compile("^[a-zA-Z][a-zA-Z0-9]{5,9}$");
+                Matcher matcher = pattern_admin.matcher(register_admin.getText().toString());
+                if(!matcher.find()){
+                    Toast.makeText(RegisterActivity.this,"账号不合法!",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Pattern pattern_password = Pattern.compile("[a-zA-Z0-9]{8,12}$");
+                matcher = pattern_password.matcher(register_password.getText().toString());
+                if(!matcher.find()){
+                    Toast.makeText(RegisterActivity.this,"密码不合法!",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                //
                 if(register_password.getText().toString().equals(register_cpassword.getText().toString())){
                     //开启线程
                     mHandler.post(mRunnable);

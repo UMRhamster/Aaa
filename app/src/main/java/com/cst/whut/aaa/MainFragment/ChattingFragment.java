@@ -1,16 +1,14 @@
 package com.cst.whut.aaa.MainFragment;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.HandlerThread;
 import android.os.Message;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -19,23 +17,17 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cst.whut.aaa.ChatActivity;
+
 import com.cst.whut.aaa.DataProcess.BubbleAdapter;
 import com.cst.whut.aaa.DataProcess.ChattingContext;
-import com.cst.whut.aaa.DataProcess.ChattingRunnable;
 import com.cst.whut.aaa.DataProcess.DataProcess;
-import com.cst.whut.aaa.MainActivity;
 import com.cst.whut.aaa.R;
-import com.cst.whut.aaa.RegisterActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -72,6 +64,7 @@ public class ChattingFragment extends Fragment implements View.OnClickListener{
         recyclerView.setLayoutManager(layoutManager);
         bubbleAdapter = new BubbleAdapter(chattingList,getActivity());
         recyclerView.setAdapter(bubbleAdapter);
+        //软键盘回车键监听
         chatting_et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -150,5 +143,9 @@ public class ChattingFragment extends Fragment implements View.OnClickListener{
 
 
         }
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }
